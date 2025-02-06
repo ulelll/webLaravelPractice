@@ -11,7 +11,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $with = ['grade'];
+    protected $with = ['grade', 'department'];
     public function grade(): BelongsTo
     {
         return $this->belongsTo(Grade::class);
