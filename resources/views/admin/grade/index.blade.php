@@ -3,11 +3,11 @@
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                <a href="/admin/students/create" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                <a href="/admin/grades/create" class="flex items-center justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                     <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
                     </svg>
-                    Add Student
+                    Add Grade
                 </a>
 
             </div>
@@ -35,32 +35,24 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-4 py-3">No</th>
-                    <th scope="col" class="px-4 py-3">Name</th>
+                    <th scope="col" class="px-4 py-3">Num</th>
+                    <th scope="col" class="px-4 py-3">Student Name</th>
                     <th scope="col" class="px-4 py-3">Grade</th>
-                    <th scope="col" class="px-4 py-3">Email</th>
-                    <th scope="col" class="px-4 py-3">Phone</th>
-                    <th scope="col" class="px-4 py-3">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($students as $student)
+                @foreach($grades as $grade)
                     <tr class="border-b dark:border-gray-700">
-                        <td class="py-3 px-4">{{ $student->id }}</td>
-                        <td class="py-3 px-4">{{ $student->name }}</td>
-                        <td class="py-3 px-4">{{ $student->grade->name }}</td>
-                        <td class="py-3 px-4">{{ $student->email }}</td>
-                        <td class="py-3 px-4">{{ $student->telepon }}</td>
+                        <td class="py-3 px-4">{{ $grade->id }}</td>
+                        <td class="py-3 px-4">{{ $grade->name }}</td>
+                        <td class="py-3 px-4">{{ $grade->department->name }}</td>
                         <td class="py-3 px-4 flex space-x-4">
 
                             <button
                                 id="modalDetail"
                                 class="modalDetailBtn"
-                                data-name="{{ $student->name }}"
-                                data-grade="{{ $student->grade->name }}"
-                                data-email="{{ $student->email }}"
-                                data-phone="{{ $student->telepon }}"
-                                data-address="{{ $student->address }}"
+                                data-name="{{ $grade->name }}"
+                                data-grade="{{ $grade->department->name }}"
                                 data-modal-target="readStudentModal"
                                 data-modal-toggle="readStudentModal"
                                 type="button">
@@ -70,17 +62,17 @@
                                 </svg>
                             </button>
 
-                            <a href="/admin/students/edit/{{ $student->id }}">
+                            <a href="/admin/grades/edit/{{ $grade->id }}">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
                                 </svg>
                             </a>
 
-                            <button id="deleteButton" data-id="{{ $student->id }}" class="text-red-600 hover:text-red-800">
+                            {{-- <button id="deleteButton" data-id="{{ $grade->id }}" class="text-red-600 hover:text-red-800">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                                 </svg>
-                            </button>
+                            </button> --}}
                         </td>
                     </tr>
                 @endforeach
@@ -160,15 +152,12 @@
                     <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Email</dt>
                     <dd id="modalEmail" class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"></dd>
 
-                    <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Phone</dt>
-                    <dd id="modalPhone" class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"></dd>
-
                     <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Address</dt>
                     <dd id="modalAddress" class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"></dd>
                 </dl>
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-3 sm:space-x-4">
-                        <a type="button" href="/admin/students/edit/{{ $student->id }}" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <a type="button" href="/admin/grades/edit/{{ $grade->id }}" class="text-white inline-flex items-center bg-pink-500 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-pink-500 dark:hover:bg-pink-600 dark:focus:ring-pink-800">
                             <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                             Edit
                         </a>
@@ -193,7 +182,7 @@
     </div>
 
     <!-- Form for DELETE Request -->
-    <form id="deleteForm" action="/admin/students/delete/{{ $student->id }}" method="POST" style="display:none;">
+    <form id="deleteForm" action="/admin/grade/delete/{{ $grade->id }}" method="POST" style="display:none;">
         @csrf
         @method('DELETE')
     </form>
@@ -209,28 +198,28 @@
             const modalDetailBtns = document.querySelectorAll('.modalDetailBtn');
 
             // Ambil modal dan elemen-elemen dalam modal untuk diisi
-            const modal = document.getElementById('readStudentModal');
+            const modal = document.getElementById('readGradeModal');
             const modalName = document.getElementById('modalName');
             const modalGrade = document.getElementById('modalGrade');
-            const modalEmail = document.getElementById('modalEmail');
-            const modalPhone = document.getElementById('modalPhone');
-            const modalAddress = document.getElementById('modalAddress');
+            //const modalEmail = document.getElementById('modalEmail');
+            // const modalPhone = document.getElementById('modalPhone');
+            //const modalAddress = document.getElementById('modalAddress');
 
             modalDetailBtns.forEach(button => {
                 button.addEventListener('click', function() {
                     // Ambil data dari atribut data-* pada tombol yang diklik
                     const name = button.getAttribute('data-name');
-                    const grade = button.getAttribute('data-grade');
-                    const email = button.getAttribute('data-email');
-                    const phone = button.getAttribute('data-phone');
-                    const address = button.getAttribute('data-address');
+                    const grade = button.getAttribute('data-department');
+                    //const email = button.getAttribute('data-email');
+                    // const phone = button.getAttribute('data-phone');
+                    //const address = button.getAttribute('data-address');
 
                     // Isi modal dengan data yang diambil
                     modalName.textContent = name;
                     modalGrade.textContent = grade;
-                    modalEmail.textContent = email;
-                    modalPhone.textContent = phone;
-                    modalAddress.textContent = address;
+                    //modalEmail.textContent = email;
+                    // modalPhone.textContent = phone;
+                    //modalAddress.textContent = address;
 
                     // Tampilkan modal
                     modal.classList.remove('hidden');
@@ -247,37 +236,38 @@
 
         //script untuk modal delete
         // Ambil elemen modal dan tombol delete
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteButton = document.getElementById('deleteButton');
-        const confirmDeleteButton = document.getElementById('confirmDelete');
-        const cancelDeleteButton = document.getElementById('cancelDelete');
+        // const deleteModal = document.getElementById('deleteModal');
+        // const deleteButtons = document.querySelectorAll('#deleteButton');
+        // const confirmDeleteButton = document.getElementById('confirmDelete');
+        // const cancelDeleteButton = document.getElementById('cancelDelete');
 
-        // Variable untuk menyimpan ID yang ingin dihapus
-        let studentIdToDelete = null;
+        // // Variable untuk menyimpan ID yang ingin dihapus
+        // let studentIdToDelete = null;
 
-        // Ketika tombol delete ditekan
-        deleteButton.addEventListener('click', function () {
-            // Menyimpan ID siswa yang ingin dihapus
-            studentIdToDelete = deleteButton.getAttribute('data-id');
-            // Menampilkan modal
-            deleteModal.classList.remove('hidden');
-        });
+        // // Ketika tombol delete ditekan
+        // deleteButtons.forEach(button => {
+        //     button.addEventListener('click', function () {
+        //     // Menyimpan ID siswa yang ingin dihapus
+        //     studentIdToDelete = button.getAttribute('data-id');
+        //     // Menampilkan modal
+        //     deleteModal.classList.remove('hidden');
+        // });
+        // });
 
-        // Ketika tombol cancel ditekan
-        cancelDeleteButton.addEventListener('click', function () {
-            // Menutup modal tanpa menghapus data
-            deleteModal.classList.add('hidden');
-        });
+        // // Ketika tombol cancel ditekan
+        // cancelDeleteButton.addEventListener('click', function () {
+        //     // Menutup modal tanpa menghapus data
+        //     deleteModal.classList.add('hidden');
+        // });
 
-        // Ketika tombol confirm ditekan
-        confirmDeleteButton.addEventListener('click', function () {
-            // Mengisi form action dengan ID siswa
-            const form = document.getElementById('deleteForm');
-            form.action = '/admin/students/delete/' + studentIdToDelete;
+        // // Ketika tombol confirm ditekan
+        // confirmDeleteButton.addEventListener('click', function () {
+        //     // Mengisi form action dengan ID siswa
+        //     const form = document.getElementById('deleteForm');
+        //     form.action = '/admin/grade/delete/' + studentIdToDelete;
 
-            // Submit form untuk menghapus data
-            form.submit();
-        });
-
+        //     // Submit form untuk menghapus data
+        //     form.submit();
+        // });
     </script>
 </x-admin-layout>

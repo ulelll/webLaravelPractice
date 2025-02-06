@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
             $table->integer('department_id');
+            $table->timestamps();
         });
     }
 

@@ -62,7 +62,6 @@
                         <td>{{ $departments->id }}</td>
                         <td>{{ $departments->name }}</td>
                         <td>{{ $departments->desc }}</td>
-
                     </tr>
                     @endforeach
                 </tbody>

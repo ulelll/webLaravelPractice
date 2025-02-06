@@ -1,25 +1,46 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Models\Student;
-use App\Models\Department;
-use App\Models\Grade;
-use Illuminate\Http\Request;
+namespace App\Http\Controllers\admin;
 
+use App\Models\Student;
+use App\Models\Grade;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::with(['grade', 'department'])->get();
+        // $students = Student::with('grade')->latest()->get();
 
-            return view('students', [
-                'title' => 'student',
-                'students' => Student::all()
-            ]);
+        //     return view('admin.student.index', compact('students'), [ //adminstudent.php
+        //         'title' => "Students",
+        //         'students' => $students
+        //     ]);
+        $query = $request->input('q');
+
+
+        $students = Student::with(['grade', 'department'])
+            ->when($query, function ($queryBuilder) use ($query) {
+                $queryBuilder->where('name', 'like', '%' . $query . '%')
+                    ->orWhere('email', 'like', '%' . $query . '%')
+                    ->orWhere('address', 'like', '%' . $query . '%')
+                    ->orWhereHas('grade', function ($q) use ($query) {
+                        $q->where('name', 'like', '%' . $query . '%');
+                    });
+            })
+            ->paginate(10); // Fetch 10 students per page
+
+        return view('admin.student.index', compact('students'), [
+            'title' => 'Student',
+            'students' => $students,
+            'searchQuery' => $query
+        ]);
+
     }
 
     /**
@@ -27,7 +48,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('admin.student.create', [
+        return view('admin.student.create', [ //student\create
             "title"     => "Create New Data",
             'grades'    => Grade::all()
         ]);
@@ -40,11 +61,10 @@ class StudentController extends Controller
     {
         //validate the data tht u sent
         $validated = $request->validate([
-            'name'      => 'required |string| max255',
-            'grade_id'  => 'required|exists:grades,id',
-            'email'     => 'required|string|max:255',
-            'telepon'   => 'required|string|max:255',
-            'address'   => 'required|string|max: 255',
+                'name'      => 'required|string|max:255',
+                'grade_id'  => 'required|exists:grades,id',
+                'email'     => 'required',
+                'address'   => 'required|string|max:255',
         ]);
 
         //savin the student's data to student table
@@ -52,9 +72,7 @@ class StudentController extends Controller
             'name'      => $validated['name'],
             'grade_id'  => $validated['grade_id'],
             'email'     => $validated['email'],
-            'telepon'   => $validated['telepon'],
             'address'   => $validated['address'],
-
         ]);
 
         //redirect success response
@@ -78,10 +96,10 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         //taking grade data to dropdown form
-        $grades = grade::all();
+        $grades = Grade::all();
 
         //showing the edit page with student data and grade
-        return view('admin.student.edit', [
+        return view('admin.student.edit', [ //student\edit
             'title'     => 'Edit Student Data',
             'student'   => $student,
             'grades'    => $grades
@@ -95,11 +113,10 @@ class StudentController extends Controller
     {
         //validate data tht been sent
         $validated = $request->validate([
-            'name'      => 'required |string| max255',
+            'name'      => 'required|string|max:255',
             'grade_id'  => 'required|exists:grades,id',
             'email'     => 'required|email|max:255',
-            'telepon'   => 'required|string|max:255',
-            'address'   => 'required|string|max: 255',
+            'address'   => 'required|string|max:255',
         ]);
 
         //finding student's data based on id
@@ -110,12 +127,11 @@ class StudentController extends Controller
             'name'     => $validated['name'],
             'grade_id' => $validated['grade_id'],
             'email'    => $validated['email'],
-            'telepon'  => $validated['telepon'],
             'address'  => $validated['address'],
         ]);
 
         //redirect with success messege
-        return redirect('/admin/stuents')->with('success', 'Student updated successfully.');
+        return redirect('/admin/students')->with('success', 'Student updated successfully.');
     }
 
     /**
@@ -124,7 +140,7 @@ class StudentController extends Controller
     public function destroy(string $id)
     {
         //finding student's data by id
-        $student = Student::finOrFail($id);
+        $student = Student::findOrFail($id);
         //removing student's data
         $student->delete();
         //redirect messege
