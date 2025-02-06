@@ -1,3 +1,225 @@
+<style>
+    /* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+.dark body {
+    background-color: #1f2937;
+    color: #f9fafb;
+}
+
+/* Table Styles */
+.bg-white {
+    background-color: #ffffff;
+}
+
+.dark .bg-gray-800 {
+    background-color: #1f2937;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/* Button Styles */
+.bg-primary-700 {
+    background-color: #3b82f6;
+}
+
+.hover\:bg-primary-800:hover {
+    background-color: #2563eb;
+}
+
+.dark .bg-primary-600 {
+    background-color: #2563eb;
+}
+
+.dark .hover\:bg-primary-700:hover {
+    background-color: #1d4ed8;
+}
+
+.focus\:ring-4:focus {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+/* Search Bar Styles */
+.bg-gray-50 {
+    background-color: #f9fafb;
+}
+
+.dark .bg-gray-700 {
+    background-color: #374151;
+}
+
+.border-gray-300 {
+    border-color: #d1d5db;
+}
+
+.dark .border-gray-600 {
+    border-color: #4b5563;
+}
+
+.focus\:ring-primary-500:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.focus\:border-primary-500:focus {
+    border-color: #3b82f6;
+}
+
+/* Table Row Hover Effect */
+.hover\:bg-gray-100:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .hover\:bg-gray-700:hover {
+    background-color: #374151;
+}
+
+/* Modal Styles */
+.fixed {
+    position: fixed;
+}
+
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.z-50 {
+    z-index: 50;
+}
+
+.bg-opacity-50 {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.max-w-sm {
+    max-width: 24rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Button Hover Effects */
+.hover\:bg-gray-400:hover {
+    background-color: #9ca3af;
+}
+
+.hover\:bg-red-700:hover {
+    background-color: #dc2626;
+}
+
+/* Transition Effects */
+.transition {
+    transition: all 0.2s ease-in-out;
+}
+
+/* SVG Icon Styles */
+.text-gray-800 {
+    color: #1f2937;
+}
+
+.dark .text-white {
+    color: #f9fafb;
+}
+
+/* Pagination Styles */
+.inline-flex {
+    display: inline-flex;
+}
+
+.items-stretch {
+    align-items: stretch;
+}
+
+.-space-x-px > * + * {
+    margin-left: -1px;
+}
+
+.hover\:bg-gray-100:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .hover\:bg-gray-700:hover {
+    background-color: #374151;
+}
+
+.bg-blue-500 {
+    background-color: #f184cb;
+}
+
+.text-black {
+    color: #000000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .space-y-3 > * + * {
+        margin-top: 0.75rem;
+    }
+
+    .md\:flex-row {
+        flex-direction: row;
+    }
+
+    .md\:space-y-0 > * + * {
+        margin-top: 0;
+    }
+
+    .md\:space-x-4 > * + * {
+        margin-left: 1rem;
+    }
+}
+    </style>
 <x-admin-layout>
     <!-- Start coding here -->
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
